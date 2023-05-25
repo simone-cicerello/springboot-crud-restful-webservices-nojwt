@@ -1,12 +1,8 @@
 package com.fincons.itsle.openapi.springbootcrudrestfulwebservicesnojwt.controller;
 
 import com.fincons.itsle.openapi.springbootcrudrestfulwebservicesnojwt.entity.User;
-import com.fincons.itsle.openapi.springbootcrudrestfulwebservicesnojwt.exception.ErrorDetails;
 import com.fincons.itsle.openapi.springbootcrudrestfulwebservicesnojwt.exception.ResourceNotFoundException;
 import com.fincons.itsle.openapi.springbootcrudrestfulwebservicesnojwt.repository.UserRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +25,6 @@ public class UserController {
 	}
 
 	// get user by id
-	@Operation(	summary = "Get a User by its id",
-            //description = "It permits to retrieve the user by id", tags = "Query Operations",
-            responses = {
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = User.class))),
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not Found",
-                            content = @Content(schema = @Schema(implementation = ErrorDetails.class))),
-                    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Unexpected Error",
-                            content = @Content(schema = @Schema(implementation = ErrorDetails.class)))
-            })
 	@GetMapping(path="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public User getUserById(@PathVariable (value = "id") long userId) {
 		return this.userRepository.findById(userId)
