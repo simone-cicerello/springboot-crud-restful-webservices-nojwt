@@ -1,5 +1,6 @@
 package com.fincons.itsle.openapi.springbootcrudrestfulwebservicesnojwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private long id;
 	
 	@Column(name = "first_name")
@@ -24,5 +26,11 @@ public class User {
 	private String lastName;
 	
 	@Column(name = "email")
+	@JsonIgnore
 	private String email;
+
+	public User(String firstName, String lastName){
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 }
