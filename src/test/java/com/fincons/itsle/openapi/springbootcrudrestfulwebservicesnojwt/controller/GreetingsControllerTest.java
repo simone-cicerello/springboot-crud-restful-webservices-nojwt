@@ -30,6 +30,7 @@ class GreetingsControllerTest {
     void test_get_Status200_Greetings() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .get("/greetings")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 //.andDo(print())
                 .andExpect(status().isOk());
@@ -39,6 +40,7 @@ class GreetingsControllerTest {
     void test_get_String_Greetings() throws Exception {
         mvc.perform(MockMvcRequestBuilders
                         .get("/greetings")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 //.andDo(print())
                 .andExpect(status().isOk())
@@ -71,7 +73,8 @@ class GreetingsControllerTest {
     @Test
     void test_post_Status400_ReversedGreetings() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                        .get("/reversed-greetings-error")
+                        .post("/reversed-greetings-error")
+                        .content(asJsonString(new User("TestUser", "UriError")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 //.andDo(print())
@@ -115,7 +118,7 @@ class GreetingsControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(expectedUser.getLastName()));
     }
 
-    private static String asJsonString(final Object obj) {
+    private String asJsonString(Object obj) {
         try {
             var retVal = new ObjectMapper().writeValueAsString(obj);
             log.debug(retVal);
